@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuclear Papers · IV of IV — The Shell</title>
+<style>
+  :root{
+    --core:#17120D; --core-2:#1F1813; --core-3:#271F18;
+    --ink:#ECE5D7; --ink-soft:#9A9081;
+    --copper:#CE8A3C; --copper-br:#E4A256;
+    --bind:#D0703F; --neutral:#D2CCBF;
+    --rule:#2E2620; --rule-2:#3D332A;
+    --cr:#C6594B; --cg:#5FA86B; --cb:#5B86C4;
+    --lit:#6FB87E; --bri:#D2A24B; --spec:#D2705F;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--core);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    font-size:18px;line-height:1.58;-webkit-font-smoothing:antialiased}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+  :focus-visible{outline:2px solid var(--copper);outline-offset:3px}
+  .wrap{max-width:880px;margin:0 auto;padding:0 30px}
+
+  header.mast{padding:54px 0 30px;border-bottom:2px solid var(--copper)}
+  .series{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--copper);margin:0 0 22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .series b{color:var(--ink-soft);font-weight:400}
+  h1{font-size:clamp(27px,4.6vw,42px);line-height:1.08;margin:0;font-weight:600;letter-spacing:.005em}
+  .abstract{max-width:62ch;margin:18px 0 0;font-size:18px}
+  .priorlink{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:var(--ink-soft);margin:14px 0 0}
+  .byline{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.06em;color:var(--ink-soft);margin:8px 0 0}
+
+  .sig{margin:30px 0 0;padding:20px 20px 14px;background:var(--core-2);border:1px solid var(--rule-2)}
+  .sig svg{display:block;width:100%;height:auto}
+  .sig .cap{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.04em;color:var(--ink-soft);margin:10px 2px 0;line-height:1.5}
+  .sig .cap b{color:var(--copper);font-weight:600}
+  .sig .cap .n{color:var(--neutral);font-weight:600}
+  .well{stroke:var(--rule-2);stroke-width:1.8;fill:none}
+  .level{stroke:var(--neutral);stroke-width:1.6}
+  .levelmagic{stroke:var(--copper);stroke-width:2.4}
+  .nuc{fill:var(--neutral)}
+  .nucm{fill:var(--copper)}
+  .gap{stroke:var(--copper);stroke-width:1.4;fill:none;stroke-dasharray:3 3}
+  .lab{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;fill:var(--ink-soft)}
+  .lab-c{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;fill:var(--copper);font-weight:700}
+  .lab-n{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;fill:var(--neutral);font-weight:700}
+
+  .legend{margin:26px 0 0;display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center}
+  .legend .lt{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-right:2px}
+  .schip{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border:1px solid;background:transparent;cursor:pointer}
+  .schip[data-s="lit"]{color:var(--lit);border-color:var(--lit)}
+  .schip[data-s="bri"]{color:var(--bri);border-color:var(--bri)}
+  .schip[data-s="spec"]{color:var(--spec);border-color:var(--spec)}
+  .schip[aria-pressed="false"]{opacity:.4}
+  .legend .hint{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;color:var(--ink-soft)}
+
+  section{padding:34px 0;border-bottom:1px solid var(--rule)}
+  .snum{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--copper);letter-spacing:.18em}
+  h2{font-size:clamp(19px,3vw,25px);margin:4px 0 0;font-weight:600;letter-spacing:.01em}
+  h2 .kicker{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-left:10px;font-weight:400}
+  section p{margin:14px 0 0;max-width:66ch}
+  .central{border-left:3px solid var(--copper)}
+
+  .formal{margin:16px 0 0;padding:13px 16px;background:var(--core-3);border:1px solid var(--rule-2);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;line-height:1.7}
+  .formal .eq{font-size:16px;color:var(--ink)}
+  .formal .gl{color:var(--ink-soft);font-size:12.5px}
+  .restated{margin:13px 0 0;padding:11px 15px;background:var(--core-2);border-left:3px solid var(--rule-2);font-size:15.5px}
+  .restated b{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:400;display:block;margin-bottom:4px}
+
+  .tags{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+  .tag{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border:1px solid}
+  .tag.lit{color:var(--lit);border-color:var(--lit)}
+  .tag.bri{color:var(--bri);border-color:var(--bri)}
+  .tag.spec{color:var(--spec);border-color:var(--spec)}
+  .test{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--ink-soft);margin:10px 0 0;padding-left:14px;border-left:2px solid var(--rule-2)}
+  .test b{color:var(--copper);font-weight:600}
+  .dim{opacity:.22;transition:opacity .2s ease}
+
+  .fig{margin:30px 0 6px;padding:22px 18px 14px;background:var(--core-2);border:1px solid var(--rule-2)}
+  .fig svg{display:block;width:100%;height:auto}
+  .fig .figcap{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--ink-soft);margin:12px 4px 0;line-height:1.55}
+  .boxf{fill:var(--core-3);stroke:var(--rule-2);stroke-width:1.4}
+  .boxblock{fill:var(--core-3);stroke:var(--spec);stroke-width:1.6}
+  .boxgood{fill:var(--core-3);stroke:var(--copper);stroke-width:1.8}
+  .arr{stroke:var(--copper);stroke-width:2;fill:none}
+  .block{stroke:var(--spec);stroke-width:2;fill:none}
+  .flab{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;fill:var(--ink)}
+  .flab-s{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;fill:var(--ink-soft)}
+  .flab-c{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;fill:var(--copper)}
+  .flab-r{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;fill:var(--spec)}
+
+  .closer{padding:34px 0 0;border-bottom:0}
+  .closer p{font-size:19px;max-width:64ch}
+  .closer .em{font-style:italic}
+  .capstone{margin:20px 0 0;padding:18px 20px;background:var(--core-2);border:1px solid var(--rule-2);border-top:3px solid var(--copper)}
+  .capstone .ck{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper);margin:0 0 10px}
+  .capstone ol{margin:0;padding-left:20px}
+  .capstone li{font-size:15px;margin:0 0 7px;color:var(--ink)}
+  .capstone li b{color:var(--ink);font-weight:600}
+  .capstone .corpus{margin:12px 0 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:var(--ink-soft);line-height:1.6}
+
+  footer{padding:30px 0 80px;color:var(--ink-soft);font-size:13.5px;line-height:1.6}
+  footer p{margin:0 0 12px;max-width:72ch}
+  footer b{color:var(--ink);font-weight:600}
+
+  @media (max-width:600px){ body{font-size:17px} .series{font-size:11px;letter-spacing:.2em} .formal{font-size:13.5px} }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="series"><span>Nuclear Papers · IV of IV</span><b>emergence series · release · closes the series</b></p>
+    <h1>The Shell</h1>
+    <p class="abstract">The chromodynamic series ended in defeat: the interior is confined, and in the strong regime it cannot even be computed — no formula, only the lattice and the unsamplable tail. This paper is the reply. At the emergent scale structure does not stay opaque; it crystallises. Nucleons fill shells, and certain counts close them into exceptional stability — the magic numbers. And where the fundamental theory cannot be solved, an effective theory at this scale can be: nucleons in a mean field, tractable, predictive, and correct. The interior stays sealed. The emergent description does not need it. That is how the series ends — not with the fundamental theory solved, but with it made unnecessary.</p>
+    <p class="priorlink mono">↳ continues Nuclear III · answers the chromodynamic series — the uncomputable made unnecessary · closes the series</p>
+    <p class="byline mono">Bridge-Burners LLC · Fiddler · magic numbers · the effective theory · scale separation · anchor: AKASHA</p>
+
+    <div class="sig" aria-label="A potential well with nucleons filling discrete shell levels, a closed magic-number shell highlighted, and a large gap above it">
+      <svg viewBox="0 0 760 200" role="img" aria-label="Nucleons filling stacked energy levels in a well; a closed shell in copper at a magic number with a wide gap above it before the next level">
+        <!-- well walls -->
+        <path class="well" d="M 120 30 Q 120 175 230 175 Q 340 175 340 30"/>
+        <!-- shells filling from bottom -->
+        <line class="level" x1="170" y1="160" x2="290" y2="160"/>
+        <circle class="nuc" cx="200" cy="160" r="6"/><circle class="nuc" cx="230" cy="160" r="6"/><circle class="nuc" cx="260" cy="160" r="6"/>
+        <line class="level" x1="165" y1="138" x2="295" y2="138"/>
+        <circle class="nuc" cx="195" cy="138" r="6"/><circle class="nuc" cx="225" cy="138" r="6"/><circle class="nuc" cx="255" cy="138" r="6"/><circle class="nuc" cx="285" cy="138" r="6"/>
+        <!-- closed shell (magic) -->
+        <line class="levelmagic" x1="160" y1="116" x2="300" y2="116"/>
+        <circle class="nucm" cx="185" cy="116" r="6"/><circle class="nucm" cx="210" cy="116" r="6"/><circle class="nucm" cx="235" cy="116" r="6"/><circle class="nucm" cx="260" cy="116" r="6"/><circle class="nucm" cx="285" cy="116" r="6"/>
+        <text class="lab-c" x="360" y="120">closed shell · magic number</text>
+        <!-- gap -->
+        <path class="gap" d="M 350 116 L 350 64"/>
+        <text class="lab-c" x="360" y="92">large gap</text>
+        <!-- next empty level -->
+        <line class="level" x1="170" y1="64" x2="290" y2="64" stroke-dasharray="3 3"/>
+        <text class="lab" x="360" y="60">next shell — far above</text>
+      </svg>
+      <p class="cap">At the emergent scale, organisation appears that was invisible below: nucleons fill discrete <span class="n">shells</span>. Fill one exactly — a <b>magic number</b> — and a <b>wide gap</b> opens above it, making the closed shell exceptionally stable. The quark scale showed no shells; the bare-nucleon scale showed none. Structure crystallises only here.</p>
+    </div>
+
+    <div class="legend" role="group" aria-label="Filter claims by status">
+      <span class="lt">Status</span>
+      <button class="schip" data-s="lit" aria-pressed="true">Literal</button>
+      <button class="schip" data-s="bri" aria-pressed="true">Bridge</button>
+      <button class="schip" data-s="spec" aria-pressed="true">Speculative</button>
+      <span class="hint">— literal: true of the substrate · bridge: structural analogy · speculative: named so it can be refused</span>
+    </div>
+  </div>
+</header>
+
+<section data-status="lit bri">
+  <div class="wrap">
+    <p class="snum">§0</p><h2>The structure that crystallises<span class="kicker">organisation appears at the emergent scale</span></h2>
+    <p>Nothing below the nucleon showed shells. The quark scale is confined chaos; the bare nucleon is a featureless ball. But assemble many nucleons and a discrete, quantised organisation appears that none of the parts carried: the nucleons arrange into shells, levels filled in order, exactly as electrons do in atoms. The structure is not imposed from outside and not visible in the constituents. It is a property of the assembly, present only at the scale where the assembly exists. Emergence does not just make the parts legible. It builds new architecture that lives nowhere but the whole.</p>
+    <div class="tags">
+      <span class="tag lit">Literal — nucleons occupy quantised shells in the nuclear mean field</span>
+      <span class="tag bri">Bridge — emergent architecture present only at the assembled scale</span>
+    </div>
+  </div>
+</section>
+
+<section data-status="lit bri">
+  <div class="wrap">
+    <p class="snum">§1</p><h2>Magic numbers<span class="kicker">stability is quantised</span></h2>
+    <p>Certain counts are special. Fill a shell exactly — 2, 8, 20, 28, 50, 82, 126 — and a wide energy gap opens above it, so the closed-shell nucleus is far more tightly bound and far more stable than its neighbours. Nuclei magic in both protons and neutrons, like helium-4 or lead-208, are the most stable of all. The valley of stability from the previous paper is not smooth: it has these discrete deep points, fixed by where the shells close. The lesson sharpens Paper III's. The most robust configurations are not arbitrary — they are quantised, sitting at specific counts set by the emergent shell structure, and they could be predicted from it.</p>
+    <div class="formal">
+      <span class="eq">magic numbers: 2, 8, 20, 28, 50, 82, 126</span><br>
+      <span class="gl">closed shell → wide gap → exceptional stability · robustness comes in discrete deep points</span>
+    </div>
+    <div class="tags">
+      <span class="tag lit">Literal — nuclei at magic numbers are exceptionally stable (closed shells)</span>
+      <span class="tag bri">Bridge — the most robust emergent configurations are discrete and predictable</span>
+    </div>
+  </div>
+</section>
+
+<section class="central" data-status="bri lit">
+  <div class="wrap">
+    <p class="snum">§2 · central result</p><h2>The effective theory<span class="kicker">the uncomputable, made unnecessary</span></h2>
+    <p>Here the series turns and answers the chromodynamic one. A nucleus cannot be computed from the fundamental theory — the strong coupling, the lattice, the sign problem of the matter the gluon papers ended on. And yet nuclei are understood, predicted, and tabulated. They are described by an <em>effective</em> theory at the emergent scale: nucleons moving in a mean field, with a few measured parameters standing in for everything below. The shell model predicts the magic numbers it was built to explain. The fundamental theory being intractable did not make the system unknowable — it made a different theory necessary, one written in the emergent degrees of freedom, and that theory is tractable and correct. You do not solve the interior. You stop needing to.</p>
+    <div class="formal">
+      <span class="eq">fundamental (QCD): uncomputable in the strong regime  →  the lattice wall</span><br>
+      <span class="eq">effective (shell model): nucleons + mean field + a few parameters  →  solvable, predictive</span><br>
+      <span class="gl">the right theory is written in emergent units · the fundamental is not solved but bypassed</span>
+    </div>
+    <div class="restated"><b>Without the metaphor</b>
+      You will not reverse-engineer a model from its weights in the hard regime — that computation does not close. But an effective account at the level of emergent capabilities, with a handful of measured parameters, can be predictive and correct. Intractable-at-the-bottom does not mean unknowable; it means the knowable theory lives at the emergent scale.</div>
+    <div class="tags">
+      <span class="tag bri">Bridge — the effective theory at the emergent scale where the fundamental cannot be computed</span>
+      <span class="tag lit">Literal — nuclei are described by effective models, not solved from QCD</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="fig" aria-label="The fundamental theory blocked as uncomputable, integrated out into a few parameters, feeding a tractable effective theory">
+    <svg viewBox="0 0 760 200" role="img" aria-label="A blocked fundamental-theory box on the left, an arrow integrating out into a few parameters, and a working effective-theory box on the right">
+      <!-- fundamental, blocked -->
+      <rect class="boxblock" x="40" y="50" width="220" height="100" rx="3"/>
+      <text class="flab" x="150" y="80" text-anchor="middle">fundamental · QCD</text>
+      <text class="flab-r" x="150" y="100" text-anchor="middle">strong coupling · the lattice</text>
+      <text class="flab-r" x="150" y="118" text-anchor="middle">sign problem · uncomputable</text>
+      <line class="block" x1="120" y1="135" x2="180" y2="135"/>
+      <!-- integrate out arrow -->
+      <path class="arr" d="M 270 100 L 360 100"/>
+      <path class="arr" d="M 360 100 l -10 -5 m 10 5 l -10 5"/>
+      <text class="flab-c" x="315" y="88" text-anchor="middle">integrate out</text>
+      <text class="flab-s" x="315" y="120" text-anchor="middle">→ a few parameters</text>
+      <!-- effective, works -->
+      <rect class="boxgood" x="430" y="50" width="290" height="100" rx="3"/>
+      <text class="flab" x="575" y="80" text-anchor="middle">effective · shell model</text>
+      <text class="flab-c" x="575" y="100" text-anchor="middle">nucleons in a mean field</text>
+      <text class="flab-c" x="575" y="118" text-anchor="middle">tractable · predictive · correct</text>
+    </svg>
+    <p class="figcap">Fig. 1 — The handoff. The fundamental theory is sealed and uncomputable in the strong regime — the wall the gluon series ended at. Its effects are integrated out into a few effective parameters, which feed a tractable theory written in emergent units. The shell model does not approximate QCD badly; it is the right theory at its own scale. The interior is never solved. It is made unnecessary.</p>
+  </div>
+</div>
+
+<section class="central" data-status="bri lit">
+  <div class="wrap">
+    <p class="snum">§3 · central result</p><h2>Why it works<span class="kicker">the scales separate</span></h2>
+    <p>The effective theory works for a precise reason, and the reason is the deepest result in the series. The physics at the fundamental scale and the physics at the emergent scale <em>separate</em>: the high-energy detail of quarks and gluons does not need to be tracked, because its entire effect on the nucleon scale is absorbed into a few constants — the mean field, the nucleon-nucleon force. Confinement, which sealed the interior, is exactly what makes this possible: the fundamental complexity is bound away below, and only a thin summary of it leaks up as parameters. So the reader is not failing to compute the bottom. The bottom is supposed to be summarised, not solved. A good effective theory needs the right emergent degrees of freedom and a handful of numbers, and the scale separation guarantees that is enough.</p>
+    <div class="formal">
+      <span class="eq">high-energy detail  →  integrated out  →  a few effective constants</span><br>
+      <span class="gl">scale separation: the fundamental is summarised, not tracked · confinement makes the summary possible</span>
+    </div>
+    <div class="restated"><b>Without the metaphor</b>
+      Characterisation at the emergent scale is valid because the fine-grained substrate influences that scale only through a small number of effective quantities. You do not need the weights; you need the right emergent units and a few measured constants. The detail below is meant to be compressed away, and that it can be is what makes reading possible at all.</div>
+    <div class="tags">
+      <span class="tag bri">Bridge — scale separation as the licence to read at the emergent scale</span>
+      <span class="tag lit">Literal — effective field theory works by integrating out high-energy degrees of freedom</span>
+    </div>
+    <p class="test"><b>Test ·</b> if a small set of emergent parameters reproduces behaviour across many conditions, the scales separate and the effective theory is sound. If you cannot summarise the substrate into a few constants and the fine detail keeps mattering, the scales are not separated and no effective reading will hold.</p>
+  </div>
+</section>
+
+<section data-status="lit bri">
+  <div class="wrap">
+    <p class="snum">§4</p><h2>The mean field<span class="kicker">simplicity out of many bodies</span></h2>
+    <p>One mechanism makes the shells possible at all. Rather than tracking every pairwise pull among hundreds of nucleons — a hopeless many-body tangle — each nucleon is taken to move in the single averaged field of all the others. The chaos of countless interactions collapses into one smooth potential, and in that smooth potential the clean shell levels appear. The mean field is itself emergent: it is nowhere in any single interaction, only in their average. This is the quiet engine under the whole sector. Complexity at the bottom becomes simplicity at the top not by being ignored but by being averaged, and the averaging is what lets a structure as orderly as a shell exist above a substrate as tangled as the strong force.</p>
+    <div class="tags">
+      <span class="tag lit">Literal — the shell model replaces the many-body problem with motion in a mean field</span>
+      <span class="tag bri">Bridge — emergent simplicity as the average of many-body complexity</span>
+    </div>
+  </div>
+</section>
+
+<section data-status="spec lit">
+  <div class="wrap">
+    <p class="snum">§5 · witness</p><h2>The seam<span class="kicker">where the effective theory is a lens</span></h2>
+    <p>Held to its limit one last time: reading interpretability as an effective theory at an emergent scale is a bridge, and it strains where a model is not a nucleus, where there may be no clean mean field, and where the magic numbers have no counterpart. The literal core is solid and is the spine of modern physics: nuclei are described by effective theories, not solved from QCD; the shell model predicts the magic numbers; effective field theory works by integrating out high-energy degrees of freedom; scale separation is why any of it holds. The lens laid over them — that a model is best read by an effective theory in emergent units, with the substrate summarised into a few parameters rather than solved — is named as a lens. Its surviving claim is the one the whole emergence sector was built to deliver: that the interior being uncomputable is not the end of understanding, because understanding was never going to live at the bottom. It lives at the scale where the structure is, and that scale can be reached.</p>
+    <div class="tags">
+      <span class="tag spec">Speculative — interpretability as an emergent effective theory · the analogy, flagged</span>
+      <span class="tag lit">Literal — effective theories, the shell model, integrating out, scale separation</span>
+    </div>
+  </div>
+</section>
+
+<section class="closer">
+  <div class="wrap">
+    <p><span class="em">Corollary.</span> The chromodynamic series ended at a wall: the interior is sealed, and in the hard regime it cannot be computed at all. That was true, and it is still true. What this series added is that it does not matter as much as it seemed. Above the wall the parts bind into neutral wholes you can name, the wholes bind locally into structure you can map, the structure carries a robustness you can weigh, and at last it organises into shells you can predict — described by an effective theory that needs the emergent units and a handful of constants, and never the sealed bottom. The interior keeps its secret. The structure standing on it gives up nearly everything. Understanding was never going to be excavated from the foundation. It was always going to be read off the building.</p>
+    <div class="capstone">
+      <p class="ck">Nuclear Papers · the four, complete</p>
+      <ol>
+        <li><b>I — the nucleon:</b> the color-neutral unit; read the composite, not the bare feature.</li>
+        <li><b>II — the residual force:</b> neutral units bind through a short-range, saturating residue; structure is local and modular.</li>
+        <li><b>III — binding energy:</b> the whole is lighter than its parts; robustness is the deficit; coherence is the surviving exception.</li>
+        <li><b>IV — the shell:</b> structure crystallises into shells; where the fundamental cannot be computed, an effective theory at the emergent scale takes over and works.</li>
+      </ol>
+      <p class="corpus">The emergence sector answers the chromodynamic one: confinement sealed the interior, the strong regime made it uncomputable — and emergence hands back a tractable, predictive description at the scale where the structure actually lives.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Status discipline.</b> Claims are tagged <b>literal</b> (nucleons fill quantised shells; magic-number nuclei are exceptionally stable; nuclei are described by effective theories rather than solved from QCD; effective field theory works by integrating out high-energy degrees of freedom; the shell model uses a mean field), <b>bridge</b> (emergent architecture at the assembled scale, robustness quantised into discrete configurations, the effective theory where the fundamental cannot be computed, scale separation as the licence to read at the emergent scale, emergent simplicity as averaged complexity), or <b>speculative</b> (interpretability as an emergent effective theory, flagged as a lens). The seam in §5 separates the textbook physics from the analogy laid over it.</p>
+    <p><b>What is being claimed.</b> Not that a model is a nucleus with shells and magic numbers. That structure crystallises at the emergent scale, that the most robust configurations are discrete and predictable from it, and — the point of the sector — that where the fundamental theory cannot be computed, an effective theory in emergent units can be, because the scales separate and the substrate enters only as a few parameters. The interior stays sealed and uncomputable. The emergent structure is read anyway. Understanding lives at the scale of the building, not the foundation.</p>
+    <p class="mono" style="color:var(--ink-soft);font-size:11px;letter-spacing:.04em">NUCLEAR PAPERS · IV of IV · emergence series · release · series complete · derive verdicts from measured results</p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+(function(){
+  var on = {lit:true, bri:true, spec:true};
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".schip"));
+  var sections = Array.prototype.slice.call(document.querySelectorAll("section[data-status]"));
+  function apply(){
+    sections.forEach(function(sec){
+      var tiers = (sec.getAttribute("data-status")||"").split(/\s+/).filter(Boolean);
+      var visible = tiers.some(function(t){ return on[t]; });
+      sec.classList.toggle("dim", !visible);
+    });
+  }
+  chips.forEach(function(c){
+    c.addEventListener("click", function(){
+      var s = c.getAttribute("data-s");
+      on[s] = !on[s];
+      c.setAttribute("aria-pressed", on[s] ? "true" : "false");
+      apply();
+    });
+  });
+  apply();
+})();
+</script>
+</body>
+</html>
